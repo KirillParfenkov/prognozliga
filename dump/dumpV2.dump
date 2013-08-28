@@ -1,0 +1,226 @@
+--
+-- PostgreSQL database dump
+--
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- Name: evaluations; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE evaluations (
+    id bigint NOT NULL,
+    userid bigint NOT NULL,
+    matcheid bigint NOT NULL,
+    goals1 integer,
+    goals2 integer
+);
+
+
+ALTER TABLE public.evaluations OWNER TO postgres;
+
+--
+-- Name: matches; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE matches (
+    id bigint NOT NULL,
+    name character varying(40),
+    team1id bigint NOT NULL,
+    team2id bigint NOT NULL,
+    team1goals integer,
+    team2goals integer
+);
+
+
+ALTER TABLE public.matches OWNER TO postgres;
+
+--
+-- Name: passwords; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE passwords (
+    userid bigint NOT NULL,
+    password character varying(40)
+);
+
+
+ALTER TABLE public.passwords OWNER TO postgres;
+
+--
+-- Name: profiles; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE profiles (
+    id bigint NOT NULL,
+    name character varying(40)
+);
+
+
+ALTER TABLE public.profiles OWNER TO postgres;
+
+--
+-- Name: team; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE team (
+    id bigint NOT NULL,
+    name character varying(4)
+);
+
+
+ALTER TABLE public.team OWNER TO postgres;
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE users (
+    id bigint NOT NULL,
+    email character(40) NOT NULL,
+    firstname character(40),
+    lastname character(40),
+    role character varying(10),
+    purse character varying(20),
+    active boolean
+);
+
+
+ALTER TABLE public.users OWNER TO postgres;
+
+--
+-- Data for Name: evaluations; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY evaluations (id, userid, matcheid, goals1, goals2) FROM stdin;
+\.
+
+
+--
+-- Data for Name: matches; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY matches (id, name, team1id, team2id, team1goals, team2goals) FROM stdin;
+\.
+
+
+--
+-- Data for Name: passwords; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY passwords (userid, password) FROM stdin;
+0	erbnruqp
+\.
+
+
+--
+-- Data for Name: profiles; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY profiles (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: team; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY team (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY users (id, email, firstname, lastname, role, purse, active) FROM stdin;
+0	l.k.parfiankou@gmail.com                	Kiryl                                   	Parfiankou                              	ADMIN	\N	\N
+\.
+
+
+--
+-- Name: evalusations_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY evaluations
+    ADD CONSTRAINT evalusations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: matches_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY matches
+    ADD CONSTRAINT matches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: passwords_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY passwords
+    ADD CONSTRAINT passwords_pkey PRIMARY KEY (userid);
+
+
+--
+-- Name: profiles_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY profiles
+    ADD CONSTRAINT profiles_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: team_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY team
+    ADD CONSTRAINT team_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
