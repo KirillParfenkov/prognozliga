@@ -28,7 +28,8 @@
 
 <c:if test="${not empty user}">
     <c:out value="Hi, ${user.firstName}  ${user.lastName}"></c:out>
-    <a href="<%= Constant.URL_LOGOUT_CONTROLLER %>" >Logout</a>
+    <a href="<%= Constant.URL_LOGOUT_CONTROLLER %>" >Выйти</a>
+    <a href="<%= Constant.URL_MANAGEMENT_CONTROLLER %>">Управление</a>
 </c:if>
 
 <c:if test="${not empty errorMessageKey}">

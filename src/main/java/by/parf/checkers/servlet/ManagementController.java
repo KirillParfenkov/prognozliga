@@ -6,31 +6,23 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
  * User: parf
- * Date: 18.8.13
- * Time: 15.41
+ * Date: 29.8.13
+ * Time: 22.33
  */
 @WebServlet(
-        name="mainController",
-        urlPatterns = {Constant.URL_MAIN_CONTROLLER}
+        name="managementController",
+        urlPatterns = {Constant.URL_MANAGEMENT_CONTROLLER}
 )
-public class MainController extends AbstractController {
-
-    public MainController() {
-        super();
-    }
-
+public class ManagementController extends AbstractController {
 
     @Override
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
 
-
-        jump(Constant.URL_MAIN_PAGE, request, response);
+        jump(Constant.URL_MANAGEMENT_PAGE, request, response);
     }
 }

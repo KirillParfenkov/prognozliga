@@ -18,7 +18,6 @@ import java.util.Properties;
  */
 public class UserDaoImpl extends AbstractDatabaseDAO implements UserDao{
 
-
     private static String SELECT_USER_BY_ID = "select.user.by.id";
     private static String SELECT_USER_PASS = "select.user.pass";
     private static String SELECT_USER_BY_EMAIL = "select.user.by.email";

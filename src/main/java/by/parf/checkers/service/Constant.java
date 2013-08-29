@@ -12,6 +12,9 @@ public final class Constant {
     public static final String URL_MAIN_CONTROLLER = "/mainController";
     public static final String URL_HEADER_PAGE = "/header.jsp";
     public static final String URL_LOGOUT_CONTROLLER = "/logoutController";
+    public static final String URL_MANAGEMENT_CONTROLLER = "/managementController";
+    public static final String URL_MANAGEMENT_PAGE = "/management.jsp";
+    public static final String URL_MAIN_PAGE = "/main.jsp";
 
 
     public static final String KEY_INPUT_EMAIL = "inputEmailKey";
