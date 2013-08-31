@@ -2,6 +2,8 @@ package by.parf.checkers.dao.databace;
 
 import by.parf.checkers.beans.Match;
 import by.parf.checkers.dao.MatchDao;
+import by.parf.checkers.dao.TeamDao;
+import by.parf.checkers.factory.TeamFactory;
 import by.parf.checkers.service.PropertyManager;
 
 import java.sql.Connection;
@@ -33,6 +35,8 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
     private PreparedStatement psInsertMatch;
     private PreparedStatement psSelectMaxId;
 
+    private TeamDao teamDao;
+
     public MatchDaoImpl() {
 
         try {
@@ -56,6 +60,8 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
         psInsertMatch = connection.prepareStatement(props.getProperty(INSERT_MATCh));
         psSelectMaxId = connection.prepareStatement(props.getProperty(SELECT_MAX_ID));
 
+        teamDao = TeamFactory.getClassFromFactory();
+
     }
 
     private Match pickMatch(ResultSet resultSet) throws SQLException {
@@ -63,7 +69,7 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
         String COL_ID = "id";
         String COL_NAME = "name";
         String COL_TEAM1_ID = "team1id";
-        String COL_TEAM2_Id = "team2id";
+        String COL_TEAM2_ID = "team2id";
         String COL_TEAM1_GOALS = "team1goals";
         String COL_TEAM2_GOALS = "team2goals";
         String COL_DATE = "date";
@@ -71,8 +77,8 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
 
         Match match = new Match(resultSet.getLong(COL_ID));
         match.setName(resultSet.getString(COL_NAME));
-        //match.setTeamFirst(resultSet.get);
-        //match.setTeamSecond();
+        match.setTeamFirst(teamDao.getTeamById(resultSet.getLong(COL_TEAM1_ID)));
+        match.setTeamSecond(teamDao.getTeamById(resultSet.getLong(COL_TEAM2_ID)));
         match.setTeamFirstGoals(resultSet.getInt(COL_TEAM1_GOALS));
         match.setTeamSecondGoals(resultSet.getInt(COL_TEAM2_GOALS));
         match.setTime(resultSet.getTime(COL_TIME));
@@ -197,6 +203,9 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
 
     @Override
     public void close() {
+
+        teamDao.close();
+
         closeConnection(psSelectMatches);
         closeConnection(psSelectMatchById);
         closeConnection(psDeleteMatchById);

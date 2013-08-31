@@ -191,7 +191,7 @@
                 
                 </div>
             </div>
-                        <div class="match">
+            <div class="match">
                 <div class="panel panel-default">
                     <div class="panel-heading">БАТЭ - Смаргонь</div>
 
