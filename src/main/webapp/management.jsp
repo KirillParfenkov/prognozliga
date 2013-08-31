@@ -66,34 +66,48 @@
             <div class="row">
                 <div id="navPanel" class="col-md-2">
                     <ul class="nav nav-pills nav-stacked navbar-right" >
-                        <li class="active" class="dropdown">
+                        <li class="dropdown active">
                             <a id="navItem1" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Матчи <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="navItem1">
-                                <li><a href="#">Показать список</a></li>
-                                <li><a id="inputMatchButton" href="#">Добавить матч</a></li>
+                                <li><a id="showMatchListButton" href="#matchList">Показать список</a></li>
+                                <li><a id="inputMatchButton" href="#matchList">Добавить матч</a></li>
                                 <li><a href="#">qwerwe</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
                             <a id="navItem1" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Клубы <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="navItem1">
-                                <li><a href="#">Показать список</a></li>
-                                <li><a id="inputTeamButton" href="#">Добавить клуб</a></li>
+                                <li><a id="showTeamListButton" href="#teamList">Показать список</a></li>
+                                <li><a id="inputTeamButton" href="#teamList">Добавить клуб</a></li>
                                 <li><a href="#">qwerwe</a></li>
                             </ul>
                         </li>
                          <li class="dropdown">
                             <a id="navItem1" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Пользователи <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="navItem1">
-                                <li><a href="#">Показать список</a></li>
-                                <li><a href="#">Добавить пользователя</a></li>
-                                <li><a href="#">qwerwe</a></li>
-                                <li><a href="#">Еще какя хрень</a></li>
+                                <li><a id="showUserListButton" href="#userList">Показать список</a></li>
+                                <li><a href="#userList">Добавить пользователя</a></li>
+                                <li><a href="#userList">qwerwe</a></li>
+                                <li><a href="#userList">Еще какя хрень...</a></li>
                             </ul>
                         </li>
                     </ul>
                 </div>
-                <div id="content" class="col-md-10">
+
+                <!-- ======================================= Contant panel =================================== -->
+                <div id="contentList" class="col-md-10">
+
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="matchList">
+                            Match list!
+                        </div>
+                        <div class="tab-pane" id="teamList">
+                            Team List!
+                        </div>
+                        <div class="tab-pane" id="userList">
+                            User List!
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -102,6 +116,7 @@
             <a class="btn btn-default" id="sendRequet">Send request</a>
         </div>
 
+        <!--=============================================Popups================================================-->
         <div class="modal fade in customPopup" id="requestPopup">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal">x</button>
@@ -174,6 +189,7 @@
                 <button id="inputTeamSendButton" form="inpuTeamForm" class="btn btn-success">Отправить</button>
             </div>
         </div>
+        <!--=============================================Popups End============================================-->
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="http://code.jquery.com/jquery.js"></script>
@@ -184,9 +200,12 @@
         <script src="js/bootstrap-dropdown.js"></script>
         <script src="js/bootstrap-tooltip.js"> </script>
         <script src="js/bootstrap-form.js"> </script>
-
+        <script src="js/bootstrap-tab.js"> </script>
+       
         <script type="text/javascript">
 
+
+        $(document).ready(function() {
 
             var httpRequest;
 
@@ -203,6 +222,7 @@
 
                        // var move = JSON.parse(httpRequest.responseText);
                        // makeProgress(move);
+                       console.log(httpRequest.responseText);
 
                     } else {
                         // alert('There was a problem with the request.');
@@ -210,9 +230,27 @@
                 }
             };
 
+            $('#showMatchListButton').on('click', function () {
+                         
+               $(this).tab('show');
+            });
 
+             $('#showTeamListButton').on('click', function () {
 
-        $(document).ready(function() {
+                var addTeamContollerUrl = "http://localhost:8080/showTeamListController";
+
+                var params = "?inputTeamNameKey=" + "test";
+                        httpRequest.open('GET', addTeamContollerUrl + params, true); 
+                        httpRequest.send(null);
+                        selectedChecker = null;
+
+                $(this).tab('show');
+            });
+
+            $('#showUserListButton').on('click', function () {
+                $(this).tab('show');
+            });
+
 
             $('.dropdown-toggle').dropdown();
 
@@ -242,11 +280,11 @@
 
             });
 
-            $("#inputTeamSendButton").on('click', function() {\
+            $("#inputTeamSendButton").on('click', function() {
 
-                var addTeamContollerUrl = "";
+                var addTeamContollerUrl = "http://localhost:8080/addTeamController";
 
-                var params = "?name=" + $("#inputTeamName")[0].value;
+                var params = "?inputTeamNameKey=" + $("#inputTeamName")[0].value;
                         httpRequest.open('GET', addTeamContollerUrl + params, true); 
                         httpRequest.send(null);
                         selectedChecker = null;

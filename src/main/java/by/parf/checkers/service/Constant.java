@@ -17,6 +17,7 @@ public final class Constant {
     public static final String URL_MAIN_PAGE = "/main.jsp";
 
 
+    public static final String KEY_TEAM_NAME = "inputTeamNameKey";
     public static final String KEY_INPUT_EMAIL = "inputEmailKey";
     public static final String KEY_INPUT_PASSWORD = "inputPasswordKey";
     public static final String KEY_ERROR_MESSAGE = "errorMessageKey";
