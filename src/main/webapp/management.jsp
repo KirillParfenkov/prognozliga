@@ -9,6 +9,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet" media="screen">
+
+        <link href="css/bootstrap-formhelpers.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap-formhelpers-countries.flags.css" rel="stylesheet" media="screen">
+        <link href="css/bootstrap-formhelpers-currencies.flags.css" rel="stylesheet" media="screen">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -44,6 +49,14 @@
                 -moz-border-radius:10px;
                 -webkit-border-radius:10px;
 
+                overflow: visible;
+
+            }
+
+
+
+            .calendar-z-index {
+                z-index: 10000;
             }
 
             #navPanel {
@@ -59,8 +72,6 @@
         <div id="header">
             <jsp:include page="<%= Constant.URL_HEADER_PAGE%>" />
         </div>
-
-        <h1>Management Page</h1>
 
         <div id="mainList" class="col-md-12">
             <div class="row">
@@ -100,6 +111,20 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="matchList">
                             Match Liast!
+                            <div class="bfh-selectbox bfh-currencies" data-currency="EUR" data-flags="true">
+                              <input type="hidden" value="">
+                              <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
+                                <span class="bfh-selectbox-option input-medium" data-option=""></span>
+                                <b class="caret"></b>
+                              </a>
+                              <div class="bfh-selectbox-options">
+                                <input type="text" class="bfh-selectbox-filter">
+                                <div role="listbox">
+                                <ul role="option">
+                                </ul>
+                                </div>
+                              </div>
+                            </div>
                         </div>
                         <div class="tab-pane" id="teamList">
                              <table class="table table-hover" id="teamTable">
@@ -121,12 +146,8 @@
             </div>
         </div>
 
-        <div>
-            <a class="btn btn-default" id="sendRequet">Send request</a>
-        </div>
-
         <!--=============================================Popups================================================-->
-        <div class="modal fade in customPopup" id="requestPopup">
+        <div class="modal fade in customPopup" id="insertMatchPopup">
             <div class="modal-header">
                 <button class="close" data-dismiss="modal">x</button>
                 <h3>Добавить Матч</h3>
@@ -134,6 +155,7 @@
             <div class="modal-body">
                 <form class="form-horizontal" role="form" id="inputMatchForm" action="/main.jsp">
                     <fieldset>
+
                         <!-- Name input-->
                         <div class="control-group">
                           <label class="control-label" for="inputName">Заголовок Матча</label>
@@ -141,6 +163,71 @@
                             <input id="inputName" name="textinput" type="text" placeholder="Заголовок Матча" class="form-control input-xlarge">
                           </div>
                         </div>
+
+                        <!-- Date input -->
+                        <div class="control-group">
+                            <label class="control-label" for="inpuMatchDate">Дата</label>
+                            <div id="inpuMatchDate" class="bfh-datepicker">
+                                <div class="input-group" data-toggle="bfh-datepicker">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control input-xlarge" readonly>
+                                </div>
+
+                                <div class="bfh-datepicker-calendar calendar-z-index">
+                                    <table class="calendar table table-bordered">
+                                        <thead>
+                                            <tr class="months-header">
+                                                <th class="month" colspan="4">
+                                                    <a class="previous" href="#"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                                                    <span></span>
+                                                    <a class="next" href="#"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                                                </th>
+                                                <th class="year" colspan="3">
+                                                    <a class="previous" href="#"><i class="glyphicon glyphicon-chevron-left"></i></a>
+                                                    <span></span>
+                                                    <a class="next" href="#"><i class="glyphicon glyphicon-chevron-right"></i></a>
+                                                </th>
+                                            </tr>
+                                            <tr class="days-header">
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Time input-->
+                        <div class="control-group">
+                            <label class="control-label" for="inpuMatchTime">Время</label>
+                            <div id="inpuMatchTime" class="bfh-timepicker">
+                                <div class="input-group bfh-timepicker-toggle" data-toggle="bfh-timepicker">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    <input type="text" class="form-control input-xlarge" readonly>
+                                </div>
+                                <div class="bfh-timepicker-popover">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="hour">
+                                                    <a class="next" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a><br>
+                                                    <input type="text" class="input-sm" readonly><br>
+                                                    <a class="previous" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                                </td>
+                                                <td class="separator">:</td>
+                                                <td class="minute">
+                                                    <a class="next" href="#"><i class="glyphicon glyphicon-chevron-up"></i></a><br>
+                                                    <input type="text" class="input-sm" readonly><br>
+                                                    <a class="previous" href="#"><i class="glyphicon glyphicon-chevron-down"></i></a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
 
                         <!-- Select Team1 -->
                         <div class="control-group">
@@ -163,6 +250,9 @@
                             </select>
                           </div>
                         </div>
+       
+
+                        <!-- Time input-->
 
                     </fieldset>
                 </form>
@@ -170,7 +260,7 @@
 
             <div class="modal-footer">
                 <a id href="#" data-dismiss="modal"  aria-hidden="true" class="btn btn-danger">Закрыть</a>
-                <button form="inputMatchForm" class="btn btn-success">Отправить</button>
+                <button id="inputTeamSendButton" form="inputMatchForm" class="btn btn-success">Отправить</button>
             </div>
         </div>
 
@@ -210,12 +300,20 @@
         <script src="js/bootstrap-tooltip.js"> </script>
         <script src="js/bootstrap-form.js"> </script>
         <script src="js/bootstrap-tab.js"> </script>
-       
+        <script src="js/bootstrap-datetimepicker.min.js"></script>
+        <script src="js/bootstrap-formhelpers-datepicker.js"></script>
+        <script src="js/bootstrap-formhelpers-datepicker.en_US.js"></script>
+        <script src="js/bootstrap-formhelpers-timepicker.js"></script>
+        <script src="js/bootstrap-formhelpers-timepicker.js.en_US.js"></script>
         <script type="text/javascript">
 
 
         $(document).ready(function() {
 
+            $('#datetimepicker4').datetimepicker({
+                pickTime: false
+            });
+           
             var httpRequest;
 
             if (window.XMLHttpRequest) {
@@ -249,7 +347,7 @@
 
             function redrawTeamTable( table, rowList ) {
                 console.log('In meth');
-                table.find('tbody').find('tr:gt(0)').remove();
+                table.find('tbody').find('tr:gt(-1)').remove();
                 for (var i = 0; i < rowList.length; i++ ) {
                     console.log('!');
                     table.find('tbody').append('<tr><td>' + rowList[i].id + '</td><td>' + rowList[i].name + '</td></tr>');
@@ -318,25 +416,36 @@
 
             });
 
+            $("#inputTeamSendButton").on('click', function() {
+
+                var addTeamContollerUrl = "http://localhost:8080/addTeamController";
+
+                var params = "?inputTeamNameKey=" + $("#inputTeamName")[0].value;
+                        httpRequest.open('GET', addTeamContollerUrl + params, true); 
+                        httpRequest.send(null);
+                        selectedChecker = null;
+
+            });
+
             
 
-            $('#requestPopup').modal({
+            $('#insertMatchPopup').modal({
                 keyboard: true,
                 show: false,
                 backdrop: true
             });
 
-            $('#sendRequet').on('click', function() {
+            $('#inputMatchButton').on('click', function() {
                 var w = 600; // popup width
-                var h = 420; // popip hieght
+                var h = 600; // popip hieght
                 var popupPosition = {
                     left: (screen.width/2)-(w/2) + 'px',
                     top: (screen.height/2)-(h/2) + 'px',
                     width: w,
-                    height: h  
+                    height: h
                 }
-                $( '#requestPopup' ).modal('show');
-                $( '#requestPopup' ).css(popupPosition);
+                $( '#insertMatchPopup' ).modal('show');
+                $( '#insertMatchPopup' ).css(popupPosition);
             });
 
             $('form').form();
