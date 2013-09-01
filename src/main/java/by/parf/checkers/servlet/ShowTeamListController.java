@@ -58,6 +58,7 @@ public class ShowTeamListController extends AbstractController{
             e.printStackTrace();
         }
 
+        response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         response.getWriter().write(result.toString());
     }

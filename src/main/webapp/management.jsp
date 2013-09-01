@@ -99,10 +99,19 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="matchList">
-                            Match list!
+                            Match Liast!
                         </div>
                         <div class="tab-pane" id="teamList">
-                            Team List!
+                             <table class="table table-hover" id="teamTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Название команды</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="tab-pane" id="userList">
                             User List!
@@ -220,7 +229,14 @@
                  if (httpRequest.readyState === 4) {
                      if (httpRequest.status === 200) {
 
-                       // var move = JSON.parse(httpRequest.responseText);
+                        var result = JSON.parse(httpRequest.responseText);
+                        var compRes = result.type.localeCompare("teamList");
+
+                        if (compRes === 0) {
+                            console.log('in');
+                            redrawTeamTable($('#teamTable'), result.content);
+                        }
+
                        // makeProgress(move);
                        console.log(httpRequest.responseText);
 
@@ -229,6 +245,17 @@
                     }
                 }
             };
+
+
+            function redrawTeamTable( table, rowList ) {
+                console.log('In meth');
+                table.find('tbody').find('tr:gt(0)').remove();
+                for (var i = 0; i < rowList.length; i++ ) {
+                    console.log('!');
+                    table.find('tbody').append('<tr><td>' + rowList[i].id + '</td><td>' + rowList[i].name + '</td></tr>');
+                }
+            }
+
 
             $('#showMatchListButton').on('click', function () {
                          

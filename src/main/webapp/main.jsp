@@ -233,9 +233,18 @@
         <!-- Include all compiled plugins (below), or include individual files as needed -->
         <script src="js/bootstrap.min.js"></script>
 
-         <script type="text/javascript">
+        <script type="text/javascript">
 
         $(document).ready(function() {
+
+            function redrawTeamTable( table, rowList ) {
+                table.find('tbody').find('tr:gt(0)').remove();
+                for (var i = 0; i < rowList.length; i++ ) {
+                    table.find('tbody').append('<tr><td>' + rowList[i].id + '</td><td>' + rowList[i].name + '</td></tr>');
+                }
+            }
+
+
             $('.selectpicker').selectpicker({
                  style: 'btn-info',
                  size: 4
