@@ -29,8 +29,6 @@ public class ShowTeamListController extends AbstractController{
     @Override
     protected void performTask(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        System.out.println("Get list:");
-
         TeamDao teamDao = TeamFactory.getClassFromFactory();
 
         List<Team> teams = teamDao.getTeamList();

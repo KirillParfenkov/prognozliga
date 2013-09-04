@@ -26,7 +26,7 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
     private static String SELECT_MATCH_BY_ID =  "select.match.by.id";
     private static String DELETE_MATCH_BY_ID =  "delete.match.by.id";
     private static String INSERT_MATCh = "insert.match";
-    private static String SELECT_MAX_ID = "select.max.id";
+    private static String SELECT_MAX_ID = "select.max.match.id";
 
     private Connection connection;
     private PreparedStatement psSelectMatches;
@@ -187,12 +187,12 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
 
             psInsertMatch.setLong(numId, match.getId());
             psInsertMatch.setString(numName, match.getName());
-            psInsertMatch.setLong(numTeam1Id, 0);
-            psInsertMatch.setLong(numTeam2Id, 1);
+            psInsertMatch.setLong(numTeam1Id, match.getTeamFirst().getId());
+            psInsertMatch.setLong(numTeam2Id, match.getTeamSecond().getId() );
             psInsertMatch.setInt(numTeam1Goals, match.getTeamFirstGoals());
             psInsertMatch.setInt(numTeam2Goals, match.getTeamSecondGoals());
-            psInsertMatch.setDate(numDate, match.getDate());
-            psInsertMatch.setTime(numTime, match.getTime());
+            psInsertMatch.setDate(numDate, new java.sql.Date(match.getDate().getTime()));
+            psInsertMatch.setTime(numTime, new java.sql.Time(match.getTime().getTime()));
             psInsertMatch.executeUpdate();
 
         } catch (SQLException e) {

@@ -1,7 +1,7 @@
 package by.parf.checkers.beans;
 
-import java.sql.Date;
-import java.sql.Time;
+
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,7 +17,7 @@ public class Match {
     private Team teamSecond;
     private int teamFirstGoals;
     private int teamSecondGoals;
-    private Time time;
+    private Date time;
     private Date date;
 
     public Match(long id) {
@@ -73,11 +73,11 @@ public class Match {
         this.teamSecondGoals = teamSecondGoals;
     }
 
-    public Time getTime() {
+    public Date getTime() {
         return time;
     }
 
-    public void setTime(Time time) {
+    public void setTime(Date time) {
         this.time = time;
     }
 

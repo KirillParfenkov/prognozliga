@@ -22,6 +22,12 @@ public final class Constant {
     public static final String KEY_INPUT_PASSWORD = "inputPasswordKey";
     public static final String KEY_ERROR_MESSAGE = "errorMessageKey";
     public static final String KEY_USER = "user";
+    public static final String KEY_INPUT_TEAM1_ID = "inputTeam1IdKey";
+    public static final String KEY_INPUT_TEAM2_ID = "inputTeam2IdKey";
+    public static final String KEY_INPUT_MATCH_TIME = "inputMatchTimeKey";
+    public static final String KEY_INPUT_MATCH_DATE = "inputMatchDateKey";
+    public static final String KEY_INPUT_MATCH_NAME = "inputMatchNameKey";
+
 
     private Constant() {}
 }

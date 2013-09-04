@@ -82,7 +82,6 @@
                             <ul class="dropdown-menu" role="menu" aria-labelledby="navItem1">
                                 <li><a id="showMatchListButton" href="#matchList">Показать список</a></li>
                                 <li><a id="inputMatchButton" href="#matchList">Добавить матч</a></li>
-                                <li><a href="#">qwerwe</a></li>
                             </ul>
                         </li>
                         <li class="dropdown">
@@ -90,7 +89,6 @@
                             <ul class="dropdown-menu" role="menu" aria-labelledby="navItem1">
                                 <li><a id="showTeamListButton" href="#teamList">Показать список</a></li>
                                 <li><a id="inputTeamButton" href="#teamList">Добавить клуб</a></li>
-                                <li><a href="#">qwerwe</a></li>
                             </ul>
                         </li>
                          <li class="dropdown">
@@ -98,7 +96,6 @@
                             <ul class="dropdown-menu" role="menu" aria-labelledby="navItem1">
                                 <li><a id="showUserListButton" href="#userList">Показать список</a></li>
                                 <li><a href="#userList">Добавить пользователя</a></li>
-                                <li><a href="#userList">qwerwe</a></li>
                                 <li><a href="#userList">Еще какя хрень...</a></li>
                             </ul>
                         </li>
@@ -110,21 +107,20 @@
 
                     <div class="tab-content">
                         <div class="tab-pane active" id="matchList">
-                            Match Liast!
-                            <div class="bfh-selectbox bfh-currencies" data-currency="EUR" data-flags="true">
-                              <input type="hidden" value="">
-                              <a class="bfh-selectbox-toggle" role="button" data-toggle="bfh-selectbox" href="#">
-                                <span class="bfh-selectbox-option input-medium" data-option=""></span>
-                                <b class="caret"></b>
-                              </a>
-                              <div class="bfh-selectbox-options">
-                                <input type="text" class="bfh-selectbox-filter">
-                                <div role="listbox">
-                                <ul role="option">
-                                </ul>
-                                </div>
-                              </div>
-                            </div>
+                            <table class="table table-hover" id="matchTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Заголовок</th>
+                                        <th>Команды</th>
+                                        <th>Время</th>
+                                        <th>Дата</th>
+                                        <th>Результат</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="tab-pane" id="teamList">
                              <table class="table table-hover" id="teamTable">
@@ -153,21 +149,21 @@
                 <h3>Добавить Матч</h3>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" id="inputMatchForm" action="/main.jsp">
+                <form class="form-horizontal" role="form" id="inputMatchForm" action="#">
                     <fieldset>
 
                         <!-- Name input-->
                         <div class="control-group">
-                          <label class="control-label" for="inputName">Заголовок Матча</label>
+                          <label class="control-label" for="inputMatchName">Заголовок Матча</label>
                           <div class="controls">
-                            <input id="inputName" name="textinput" type="text" placeholder="Заголовок Матча" class="form-control input-xlarge">
+                            <input id="inputMatchName" name="textinput" type="text" placeholder="Заголовок Матча" class="form-control input-xlarge">
                           </div>
                         </div>
 
                         <!-- Date input -->
                         <div class="control-group">
-                            <label class="control-label" for="inpuMatchDate">Дата</label>
-                            <div id="inpuMatchDate" class="bfh-datepicker">
+                            <label class="control-label" for="inputMatchDate">Дата</label>
+                            <div id="inputMatchDate" class="bfh-datepicker">
                                 <div class="input-group" data-toggle="bfh-datepicker">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                                     <input type="text" class="form-control input-xlarge" readonly>
@@ -200,8 +196,8 @@
 
                         <!-- Time input-->
                         <div class="control-group">
-                            <label class="control-label" for="inpuMatchTime">Время</label>
-                            <div id="inpuMatchTime" class="bfh-timepicker">
+                            <label class="control-label" for="inputMatchTime">Время</label>
+                            <div id="inputMatchTime" class="bfh-timepicker">
                                 <div class="input-group bfh-timepicker-toggle" data-toggle="bfh-timepicker">
                                     <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                     <input type="text" class="form-control input-xlarge" readonly>
@@ -250,9 +246,6 @@
                             </select>
                           </div>
                         </div>
-       
-
-                        <!-- Time input-->
 
                     </fieldset>
                 </form>
@@ -260,7 +253,7 @@
 
             <div class="modal-footer">
                 <a id href="#" data-dismiss="modal"  aria-hidden="true" class="btn btn-danger">Закрыть</a>
-                <button id="inputTeamSendButton" form="inputMatchForm" class="btn btn-success">Отправить</button>
+                <button id="inputMatchSendButton" form="inputMatchForm" class="btn btn-success">Отправить</button>
             </div>
         </div>
 
@@ -270,7 +263,7 @@
                 <h3>Добавить команду</h3>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" role="form" id="inpuTeamForm">
+                <form class="form-horizontal" role="form" id="inpuTeamForm" action="#">
                     <fieldset>
                         <!-- Name input-->
                         <div class="control-group">
@@ -310,6 +303,7 @@
 
         $(document).ready(function() {
 
+
             $('#datetimepicker4').datetimepicker({
                 pickTime: false
             });
@@ -322,17 +316,34 @@
                 httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
             }
 
+
             httpRequest.onreadystatechange = function(){
 
                  if (httpRequest.readyState === 4) {
                      if (httpRequest.status === 200) {
 
                         var result = JSON.parse(httpRequest.responseText);
-                        var compRes = result.type.localeCompare("teamList");
+                        var compTeamRes = result.type.localeCompare("teamList");
 
-                        if (compRes === 0) {
-                            console.log('in');
+                        // Teams companents update.
+                        if (compTeamRes === 0) {
+                            // Update objects associated with a list of team.
                             redrawTeamTable($('#teamTable'), result.content);
+
+                            // Update team select in insert match popup.
+                            $('#inputTeam2')[0].options.length = 0;
+                            $('#inputTeam1')[0].options.length = 0;
+                            for (var i = 0; i < result.content.length; i++) {
+
+                                $('#inputTeam1')[0].options[i] = new Option(result.content[i].name, result.content[i].id);
+                                $('#inputTeam2')[0].options[i] = new Option(result.content[i].name, result.content[i].id);
+                            }
+                        }
+
+                        var compMatchRes = result.type.localeCompare("matchList");
+
+                        if (compMatchRes === 0) {
+                            redrawMatchTable($('#matchTable'), result.content);
                         }
 
                        // makeProgress(move);
@@ -344,31 +355,80 @@
                 }
             };
 
+            var dataUpdater = {
+
+                updateTeams: function () {
+
+                    var showTeamContollerUrl = "http://localhost:8080/showTeamListController";
+
+                    var params = "?inputTeamNameKey=" + "test";
+                    httpRequest.open('GET', showTeamContollerUrl + params, true); 
+                    httpRequest.send(null);
+                    selectedChecker = null;
+                },
+
+                updateMatches: function () {
+
+                    var showMatchContollerUrl = "http://localhost:8080/showMatchListController";
+
+                    var params = "?inputTeamNameKey=" + "test";
+                    httpRequest.open('GET', showMatchContollerUrl + params, true); 
+                    httpRequest.send(null);
+                    selectedChecker = null;
+                }
+
+            };
+
+            dataUpdater.updateMatches();
+
 
             function redrawTeamTable( table, rowList ) {
-                console.log('In meth');
-                table.find('tbody').find('tr:gt(-1)').remove();
+
+                table.find('tbody').find('tr').remove();
                 for (var i = 0; i < rowList.length; i++ ) {
-                    console.log('!');
+
                     table.find('tbody').append('<tr><td>' + rowList[i].id + '</td><td>' + rowList[i].name + '</td></tr>');
                 }
             }
 
+             function redrawMatchTable( table, rowList ) {
+
+                table.find('tbody').find('tr').remove();
+                for (var i = 0; i < rowList.length; i++ ) {
+
+                    table.find('tbody').append('<tr><td>' + rowList[i].id + '</td>' + 
+                                                   '<td>' + rowList[i].name + '</td>' +
+                                                   '<td>' + rowList[i].team1Id + ' : ' + rowList[i].team2Id + '</td>' +
+                                                   '<td>' + rowList[i].time + '</td>' +
+                                                   '<td>' + rowList[i].date + '</td>' +
+                                                   '<td> - </td>' + '</tr>');
+                }
+            }
+
+            $("#inputMatchSendButton").on('click', function() {
+
+                var addMatchContollerUrl = "http://localhost:8080/addMatchController";
+
+                var params = "?inputMatchNameKey=" + $("#inputMatchName")[0].value 
+                            + "&inputMatchDateKey=" + $("#inputMatchDate").find('input')[0].value
+                            + "&inputMatchTimeKey=" + $("#inputMatchTime").find('input')[0].value
+                            + "&inputTeam1IdKey=" + $('#inputTeam1')[0].value
+                            + "&inputTeam2IdKey=" + $('#inputTeam2')[0].value;
+
+                httpRequest.open('GET', addMatchContollerUrl + params, true); 
+                httpRequest.send(null);
+                selectedChecker = null;
+            }); 
+
 
             $('#showMatchListButton').on('click', function () {
-                         
-               $(this).tab('show');
+                dataUpdater.updateMatches();
+                       
+                $(this).tab('show');
             });
 
-             $('#showTeamListButton').on('click', function () {
-
-                var addTeamContollerUrl = "http://localhost:8080/showTeamListController";
-
-                var params = "?inputTeamNameKey=" + "test";
-                        httpRequest.open('GET', addTeamContollerUrl + params, true); 
-                        httpRequest.send(null);
-                        selectedChecker = null;
-
+            $('#showTeamListButton').on('click', function () {
+                dataUpdater.updateTeams();
                 $(this).tab('show');
             });
 
@@ -415,18 +475,6 @@
                         selectedChecker = null;
 
             });
-
-            $("#inputTeamSendButton").on('click', function() {
-
-                var addTeamContollerUrl = "http://localhost:8080/addTeamController";
-
-                var params = "?inputTeamNameKey=" + $("#inputTeamName")[0].value;
-                        httpRequest.open('GET', addTeamContollerUrl + params, true); 
-                        httpRequest.send(null);
-                        selectedChecker = null;
-
-            });
-
             
 
             $('#insertMatchPopup').modal({
@@ -437,13 +485,16 @@
 
             $('#inputMatchButton').on('click', function() {
                 var w = 600; // popup width
-                var h = 600; // popip hieght
+                var h = 530; // popip hieght
                 var popupPosition = {
                     left: (screen.width/2)-(w/2) + 'px',
                     top: (screen.height/2)-(h/2) + 'px',
                     width: w,
                     height: h
                 }
+
+                dataUpdater.updateTeams();  
+
                 $( '#insertMatchPopup' ).modal('show');
                 $( '#insertMatchPopup' ).css(popupPosition);
             });

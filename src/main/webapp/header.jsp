@@ -27,14 +27,21 @@
 </c:if>
 
 <c:if test="${not empty user}">
-    <c:out value="Hi, ${user.firstName}  ${user.lastName}"></c:out>
-    <a href="<%= Constant.URL_LOGOUT_CONTROLLER %>" >Выйти</a>
-    <a href="<%= Constant.URL_MANAGEMENT_CONTROLLER %>">Управление</a>
+  <nav class="navbar navbar-default" role="navigation">
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav">
+        <p class="navbar-text"><c:out value="Hi, ${user.firstName}  ${user.lastName}"></c:out></p>
+        <li><a href="<%= Constant.URL_LOGOUT_CONTROLLER %>" >Выйти</a></li>
+        <li><a href="<%= Constant.URL_MANAGEMENT_CONTROLLER %>">Управление</a></li>
+      </ul>
+    </div>
+  </nav>
 </c:if>
 
 <c:if test="${not empty errorMessageKey}">
   <div class=error>
-     <c:out value="${errorMessageKey}"></c:out>
+    <c:out value="${errorMessageKey}"></c:out>
   </div>
 </c:if>
+
 
