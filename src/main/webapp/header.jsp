@@ -33,6 +33,7 @@
         <p class="navbar-text"><c:out value="Hi, ${user.firstName}  ${user.lastName}"></c:out></p>
         <li><a href="<%= Constant.URL_LOGOUT_CONTROLLER %>" >Выйти</a></li>
         <li><a href="<%= Constant.URL_MANAGEMENT_CONTROLLER %>">Управление</a></li>
+        <li><a href="<%= Constant.URL_MAIN_CONTROLLER %>">Главная</a></li>
       </ul>
     </div>
   </nav>

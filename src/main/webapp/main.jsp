@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="/WEB-INF/c.tld" prefix="c"%>
 <%@ page import="by.parf.checkers.service.Constant"%>
@@ -25,7 +26,7 @@
 
     		#mainList {
     			margin: 0 auto;
-    			width: 540px;
+    			width: 1040px;
     			margin-top: 50px;
     		}
 
@@ -36,6 +37,15 @@
     		.match {
     			margin-top: 100px;
     		}
+
+            body {
+                margin: 0;
+                background-color: white;
+            }
+
+            .rightPosition {
+                right: 0;
+            }
 
     	</style>
       </head>
@@ -48,185 +58,60 @@
         </div>
 
         <div id="mainList">
-            <div class="match">
-                <div class="panel panel-default">
-                    <div class="panel-heading">БАТЭ - Смаргонь</div>
+            <c:forEach var="matchSet" items="${matchSetList}">
+                <div class="match">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">${matchSet.date}</div>
 
-                    <div class="panel-body">
-                        <table class="table table-hover" id="evalTable">
-                            <thead>
-                                <tr>
-                                    <th>Участник</th>
-                                    <th>Прогноз</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr >
-                                    <td>Kiryl Parfiankou</td>
-                                    <td>7:0</td>
-                                </tr>
-                                <tr >
-                                    <td>Oleg Nesterove</td>
-                                    <td>6:1</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="panel-footer">
-                        <form class="form-inline" role="form">
-                            <div class="form-group">
-                                <label class="sr-only" for="team1Goals">БАТЭ</label>
-                                <input type="text" class="form-control" id="team1Goals" placeholder="БАТЭ">
+                            <div class="panel-body">
+                                
+                                <table class="table table-hover table-condensed" id="evalTable_${matchSet.id}">
+                                    <thead>
+                                        <tr>
+                                            <th>Участник</th>
+                                            <c:forEach var="match" items="${matchSet.matches}">
+                                                <th>${match.teamFirst.name} - ${match.teamSecond.name}</th>
+                                            </c:forEach>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr >
+                                            <td>Kiryl Parfiankou</td>
+                                            <td>7:0</td>
+                                        </tr>
+                                        <tr >
+                                            <td>Oleg Nesterov</td>
+                                            <td>6:1</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td>
+                                                User
+                                            </td>
+                                            <c:forEach var="match" items="${matchSet.matches}">
+                                                <td>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" id="team1Goals">
+                                                    </div>
+                                                </td>
+                                            </c:forEach>
+                                            <td>
+                                                <button type="submit" class="btn btn-default sendEstimationButton" value="${matchSet.id}">Отправить</button>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
-                            <div class="form-group">
-                                <label class="sr-only" for="team2Goals">Смаргонь</label>
-                                <input type="text" class="form-control" id="team2Goals" placeholder="Смаргонь">
-                            </div>
-                            <button type="submit" class="btn btn-default">Отправить</button>
-                        </form>
-                    </div>
+ <!--                               <div class="panel-footer">
+                                    <div class="row">
+                                        <div class="col-md-2 col-md-offset-10"><button type="submit" class="btn btn-default">Отправить</button></div>
+                                    </div>
+                                </div> -->
+                        </div>
                 </div>
-            </div>
-                        <div class="match">
-                <div class="panel panel-default">
-                    <div class="panel-heading">БАТЭ - Смаргонь</div>
-
-                    <div class="panel-body">
-                        <table class="table table-hover" id="evalTable">
-                            <thead>
-                                <tr>
-                                    <th>Участник</th>
-                                    <th>Прогноз</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="success">
-                                    <td>Kiryl Parfiankou</td>
-                                    <td>7:0</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>Oleg Nesterove</td>
-                                    <td>6:1</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>Vlad Ytsenko</td>
-                                    <td>4:0</td>
-                                </tr>
-                                <tr class="danger">
-                                    <td>Ruslan Abramov</td>
-                                    <td>1:2</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-                        <div class="match">
-                <div class="panel panel-default">
-                    <div class="panel-heading">БАТЭ - Смаргонь</div>
-
-                    <div class="panel-body">
-                        <table class="table table-hover" id="evalTable">
-                            <thead>
-                                <tr>
-                                    <th>Участник</th>
-                                    <th>Прогноз</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="success">
-                                    <td>Kiryl Parfiankou</td>
-                                    <td>7:0</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>Oleg Nesterove</td>
-                                    <td>6:1</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>Vlad Ytsenko</td>
-                                    <td>4:0</td>
-                                </tr>
-                                <tr class="danger">
-                                    <td>Ruslan Abramov</td>
-                                    <td>1:2</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                
-                </div>
-            </div>
-                        <div class="match">
-                <div class="panel panel-default">
-                    <div class="panel-heading">БАТЭ - Смаргонь</div>
-
-                    <div class="panel-body">
-                        <table class="table table-hover" id="evalTable">
-                            <thead>
-                                <tr>
-                                    <th>Участник</th>
-                                    <th>Прогноз</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="success">
-                                    <td>Kiryl Parfiankou</td>
-                                    <td>7:0</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>Oleg Nesterove</td>
-                                    <td>6:1</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>Vlad Ytsenko</td>
-                                    <td>4:0</td>
-                                </tr>
-                                <tr class="danger">
-                                    <td>Ruslan Abramov</td>
-                                    <td>1:2</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                
-                </div>
-            </div>
-            <div class="match">
-                <div class="panel panel-default">
-                    <div class="panel-heading">БАТЭ - Смаргонь</div>
-
-                    <div class="panel-body">
-                        <table class="table table-hover" id="evalTable">
-                            <thead>
-                                <tr>
-                                    <th>Участник</th>
-                                    <th>Прогноз</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr class="success">
-                                    <td>Kiryl Parfiankou</td>
-                                    <td>7:0</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>Oleg Nesterove</td>
-                                    <td>6:1</td>
-                                </tr>
-                                <tr class="warning">
-                                    <td>Vlad Ytsenko</td>
-                                    <td>4:0</td>
-                                </tr>
-                                <tr class="danger">
-                                    <td>Ruslan Abramov</td>
-                                    <td>1:2</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            </c:forEach>
         </div>
-
 
         <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
         <script src="http://code.jquery.com/jquery.js"></script>
@@ -235,44 +120,61 @@
 
         <script type="text/javascript">
 
-        $(document).ready(function() {
+            $(document).ready(function() {
 
-            function redrawTeamTable( table, rowList ) {
-                table.find('tbody').find('tr:gt(0)').remove();
-                for (var i = 0; i < rowList.length; i++ ) {
-                    table.find('tbody').append('<tr><td>' + rowList[i].id + '</td><td>' + rowList[i].name + '</td></tr>');
+                var httpRequest;
+
+                if (window.XMLHttpRequest) {
+                    httpRequest = new XMLHttpRequest();
+                } else if (window.ActiveXObject) {
+                    httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
                 }
-            }
+
+                httpRequest.onreadystatechange = function(){
+
+                    if (httpRequest.readyState === 4) {
+                        if (httpRequest.status === 200) {
+
+                            //var result = JSON.parse(httpRequest.responseText);
+                            //var compTeamRes = result.type.localeCompare("teamList");
 
 
-            $('.selectpicker').selectpicker({
-                 style: 'btn-info',
-                 size: 4
+                            // makeProgress(move);
+                           console.log(httpRequest.responseText);
+
+                        } else {
+                            // alert('There was a problem with the request.');
+                        }
+                    }
+                };
+
+                var dataUpdater = {
+
+                    updateEstimation: function (estimations, matchSetId) {
+
+                        var addEstimationControllerUrl = "http://localhost:8080/addEstimationController";
+
+                        var params = "?inputEstimations=" + estimations.join() + "&matchSet=" + matchSetId;
+                        httpRequest.open('GET', addEstimationControllerUrl + params, true); 
+                        httpRequest.send(null);
+                        selectedChecker = null;
+                    }
+
+                };
+
+                $('.sendEstimationButton').on('click', function () {
+                    var estimations = new Array();
+                    var matchSetId = $( this )[0].value;
+                    $('#evalTable_' + matchSetId).find('tfoot').find('input').each(function() {
+                        estimations.push($( this )[0].value);
+                    })
+
+                    dataUpdater.updateEstimation(estimations, matchSetId);
+                   
+                });
+
             });
-            
 
-            $('#requestPopup').modal({
-                keyboard: true,
-                show: false,
-                backdrop: true
-            });
-
-            $('#sendRequet').on('click', function() {
-                var w = 400; // popup width
-                var h = 400; // popip hieght
-                var popupPosition = {
-                    left: (screen.width/2)-(w/2) + 'px',
-                    top: (screen.height/2)-(h/2) + 'px',
-                    width: w,
-                    height: h  
-                }
-                $( '#requestPopup' ).modal('show');
-                $( '#requestPopup' ).css(popupPosition);
-            });
-
-            $('form').form();
-
-        });
         </script>
     </body>
 </html>

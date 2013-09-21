@@ -17,6 +17,9 @@ public final class Constant {
     public static final String URL_MAIN_PAGE = "/main.jsp";
 
 
+    public static final String KEY_EVALUATION_LIST = "evaluationList";
+    public static final String KEY_MATCH_LIST = "matchList";
+    public static final String KEY_MATCH_SET_LIST = "matchSetList";
     public static final String KEY_TEAM_NAME = "inputTeamNameKey";
     public static final String KEY_INPUT_EMAIL = "inputEmailKey";
     public static final String KEY_INPUT_PASSWORD = "inputPasswordKey";
@@ -27,6 +30,8 @@ public final class Constant {
     public static final String KEY_INPUT_MATCH_TIME = "inputMatchTimeKey";
     public static final String KEY_INPUT_MATCH_DATE = "inputMatchDateKey";
     public static final String KEY_INPUT_MATCH_NAME = "inputMatchNameKey";
+    public static final String KEY_INPUT_ESTIMATION = "inputEstimations";
+    public static final String KEY_INPUT_MATCH_SET = "matchSet";
 
 
     private Constant() {}

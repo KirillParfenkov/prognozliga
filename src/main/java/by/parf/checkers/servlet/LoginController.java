@@ -2,12 +2,11 @@ package by.parf.checkers.servlet;
 
 import by.parf.checkers.beans.User;
 import by.parf.checkers.dao.UserDao;
-import by.parf.checkers.factory.UserDAOFactory;
+import by.parf.checkers.factory.UserFactory;
 import by.parf.checkers.service.Constant;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -37,7 +36,7 @@ public class LoginController extends AbstractController {
         String password = request.getParameter(Constant.KEY_INPUT_PASSWORD);
         Boolean successfulAuthentication = false;
 
-        UserDao userDao = UserDAOFactory.getClassFromFactory();
+        UserDao userDao = UserFactory.getClassFromFactory();
 
         User user = userDao.getUserByEmail(email);
 

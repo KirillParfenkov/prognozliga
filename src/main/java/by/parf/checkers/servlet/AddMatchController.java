@@ -1,6 +1,7 @@
 package by.parf.checkers.servlet;
 
 import by.parf.checkers.beans.Match;
+import by.parf.checkers.beans.MatchSet;
 import by.parf.checkers.dao.MatchDao;
 import by.parf.checkers.dao.TeamDao;
 import by.parf.checkers.factory.MatchFactory;
@@ -57,7 +58,13 @@ public class AddMatchController extends AbstractController{
         match.setDate(matchDate);
         match.setTime(matchTime);
 
+        MatchSet matchSet = matchDao.getMatchSetByDate(match.getDate());
+        if (matchSet == null) {
+            matchSet = new MatchSet(matchDao.getMaxMatchSetId() + 1, match.getDate());
+            matchDao.addMatchSet(matchSet);
+        }
         matchDao.addMatch(match);
+        matchDao.addMatchToMatchSet(match, matchSet);
 
         response.setContentType("text/html");
         response.getWriter().write("true");

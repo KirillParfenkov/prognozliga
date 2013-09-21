@@ -9,9 +9,9 @@ import by.parf.checkers.dao.databace.UserDaoImpl;
  * Date: 18.8.13
  * Time: 0.11
  */
-public final class UserDAOFactory {
+public final class UserFactory {
 
-    private UserDAOFactory() {
+    private UserFactory() {
         // Prevent instantiation
     }
 
