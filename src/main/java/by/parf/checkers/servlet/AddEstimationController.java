@@ -52,7 +52,6 @@ public class AddEstimationController extends AbstractController {
         int evlLength = evaluationList.length;
 
         for (int i = 0; i < evlLength; i++) {
-            System.out.println("----Est---> " + evaluationList[i]);
             tmpEvaluation = new Evaluation(evaluationDao.getMaxId() + 1);
             tmpEvaluation.setTeamFirstGoals(Integer.valueOf((evaluationList[i].split(":")[GOALS_FIRST_TEAM]).trim()));
             tmpEvaluation.setTeamSecondGoals(Integer.valueOf((evaluationList[i].split(":")[GOALS_SECOND_TEAM]).trim()));
@@ -63,5 +62,6 @@ public class AddEstimationController extends AbstractController {
 
         response.setContentType("text/html");
         response.getWriter().write("true");
+        matchDao.close();
     }
 }

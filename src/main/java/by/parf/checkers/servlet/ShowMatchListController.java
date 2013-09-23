@@ -62,5 +62,6 @@ public class ShowMatchListController extends AbstractController{
         response.setCharacterEncoding("UTF-8");
         response.setContentType("application/json");
         response.getWriter().write(result.toString());
+        matchDao.close();
     }
 }

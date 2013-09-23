@@ -37,5 +37,6 @@ public class AddTeamController extends AbstractController{
 
         response.setContentType("text/html");
         response.getWriter().write("true");
+        teamDao.close();
     }
 }
