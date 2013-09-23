@@ -367,7 +367,7 @@
 
                 updateTeams: function () {
 
-                    var showTeamContollerUrl = "http://localhost:8080/showTeamListController";
+                    var showTeamContollerUrl = "http://progmozliga.herokuapp.com/showTeamListController";
 
                     var params = "?inputTeamNameKey=" + "test";
                     httpRequest.open('GET', showTeamContollerUrl + params, true); 
@@ -377,7 +377,7 @@
 
                 updateMatches: function () {
 
-                    var showMatchContollerUrl = "http://localhost:8080/showMatchListController";
+                    var showMatchContollerUrl = "http://progmozliga.herokuapp.com/showMatchListController";
 
                     var params = "?inputTeamNameKey=" + "test";
                     httpRequest.open('GET', showMatchContollerUrl + params, true); 
@@ -415,7 +415,7 @@
 
             $("#inputMatchSendButton").on('click', function() {
 
-                var addMatchContollerUrl = "http://localhost:8080/addMatchController";
+                var addMatchContollerUrl = "http://progmozliga.herokuapp.com/addMatchController";
 
                 var params = "?inputMatchNameKey=" + $("#inputMatchName")[0].value 
                             + "&inputMatchDateKey=" + $("#inputMatchDate").find('input')[0].value
@@ -475,7 +475,7 @@
 
             $("#inputTeamSendButton").on('click', function() {
 
-                var addTeamContollerUrl = "http://localhost:8080/addTeamController";
+                var addTeamContollerUrl = "http://progmozliga.herokuapp.com/addTeamController";
 
                 var params = "?inputTeamNameKey=" + $("#inputTeamName")[0].value;
                         httpRequest.open('GET', addTeamContollerUrl + params, true); 

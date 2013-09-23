@@ -197,7 +197,7 @@
 
                     updateEstimation: function (estimations, matchSetId) {
 
-                        var addEstimationControllerUrl = "http://localhost:8080/addEstimationController";
+                        var addEstimationControllerUrl = "http://progmozliga.herokuapp.com/addEstimationController";
 
                         var params = "?inputEstimations=" + estimations.join() + "&matchSet=" + matchSetId;
                         httpRequest.open('GET', addEstimationControllerUrl + params, true); 
