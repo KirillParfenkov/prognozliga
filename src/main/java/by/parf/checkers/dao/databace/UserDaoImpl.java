@@ -1,7 +1,9 @@
 package by.parf.checkers.dao.databace;
 
 import by.parf.checkers.beans.User;
+import by.parf.checkers.dao.ProfileDao;
 import by.parf.checkers.dao.UserDao;
+import by.parf.checkers.factory.ProfileFactory;
 import by.parf.checkers.service.PropertyManager;
 
 import java.sql.Connection;
@@ -27,6 +29,8 @@ public class UserDaoImpl extends AbstractDatabaseDAO implements UserDao{
     private PreparedStatement psSelectPassword;
     private PreparedStatement psSelectUserByEmail;
 
+    private ProfileDao profileDao;
+
     public UserDaoImpl() {
         try {
 
@@ -45,6 +49,8 @@ public class UserDaoImpl extends AbstractDatabaseDAO implements UserDao{
         psSelectUserById = connection.prepareStatement(props.getProperty(SELECT_USER_BY_ID));
         psSelectPassword = connection.prepareStatement(props.getProperty(SELECT_USER_PASS));
         psSelectUserByEmail = connection.prepareStatement(props.getProperty(SELECT_USER_BY_EMAIL));
+
+        profileDao = ProfileFactory.getClassFromFactory();
     }
 
     private User pickUser(ResultSet resultSet) throws SQLException {
@@ -55,7 +61,7 @@ public class UserDaoImpl extends AbstractDatabaseDAO implements UserDao{
         String COL_PURSE = "purse";
         String CAL_ACTIVE = "active";
         String COL_USER_EMAIl = "email";
-        String COL_PROFILE_ID = "";
+        String COL_PROFILE_ID = "profileId";
 
         User user = new User(resultSet.getLong(COL_USER_ID));
 
@@ -64,8 +70,7 @@ public class UserDaoImpl extends AbstractDatabaseDAO implements UserDao{
         user.setEmail(resultSet.getString(COL_USER_EMAIl));
         user.setPurse(resultSet.getString(COL_PURSE));
         user.setActive(resultSet.getBoolean(CAL_ACTIVE));
-
-        // user.setRole(Role.valueOf(resultSet.getString(COL_ROLE_NAME)));
+        user.setProfile(profileDao.getProfileById(resultSet.getLong(COL_PROFILE_ID)));
 
         return user;
     }
@@ -152,6 +157,9 @@ public class UserDaoImpl extends AbstractDatabaseDAO implements UserDao{
 
     @Override
     public void close() {
+
+        profileDao.close();
+
         closeConnection(psSelectUserById);
         closeConnection(psSelectUserByEmail);
         closeConnection(connection);

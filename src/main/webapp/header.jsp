@@ -32,7 +32,10 @@
       <ul class="nav navbar-nav">
         <p class="navbar-text"><c:out value="Hi, ${user.firstName}  ${user.lastName}"></c:out></p>
         <li><a href="<%= Constant.URL_LOGOUT_CONTROLLER %>" >Выйти</a></li>
-        <li><a href="<%= Constant.URL_MANAGEMENT_CONTROLLER %>">Управление</a></li>
+       
+        <c:if test="${user.profile.id == 0}">
+          <li><a href="<%= Constant.URL_MANAGEMENT_CONTROLLER %>">Управление</a></li>
+        </c:if>
         <li><a href="<%= Constant.URL_MAIN_CONTROLLER %>">Главная</a></li>
       </ul>
     </div>
@@ -41,7 +44,7 @@
 
 <c:if test="${not empty errorMessageKey}">
   <div class=error>
-    <c:out value="${errorMessageKey}"></c:out>
+    <div id="topErrorMessage" class="alert alert-danger"><c:out value="${errorMessageKey}"></c:out></div>
   </div>
 </c:if>
 

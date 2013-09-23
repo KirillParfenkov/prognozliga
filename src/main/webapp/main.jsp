@@ -47,6 +47,18 @@
                 right: 0;
             }
 
+            #topErrorMessage {
+                margin-top: 10px;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            .alert {
+                margin: 0px;
+            }
+
     	</style>
       </head>
     <body>
@@ -59,7 +71,7 @@
 
         <div id="mainList">
             <c:forEach var="matchSet" items="${matchSetList}">
-                <div class="match">
+                <div class="match" id="match_${matchSet.id}">
                         <div class="panel panel-default">
                             <div class="panel-heading">${matchSet.date}</div>
 
@@ -75,39 +87,45 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr >
-                                            <td>Kiryl Parfiankou</td>
-                                            <td>7:0</td>
-                                        </tr>
-                                        <tr >
-                                            <td>Oleg Nesterov</td>
-                                            <td>6:1</td>
-                                        </tr>
+                                        <c:forEach var="userEvaluation" items="${matchSet.userList}">
+                                            <tr>
+                                                <td>${userEvaluation.key.firstName} ${userEvaluation.key.lastName}</td>
+
+                                                <c:forEach var="match" items="${matchSet.matches}">
+                                                    <td>${userEvaluation.value[match].teamFirstGoals}:${userEvaluation.value[match].teamSecondGoals}</td>
+                                                </c:forEach>
+                                            </tr>
+                                        </c:forEach> 
                                     </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td>
-                                                User
-                                            </td>
-                                            <c:forEach var="match" items="${matchSet.matches}">
+                                    <c:if test="${(matchSet.userList[user] == null) && (user != null)}">
+                                        <tfoot>
+                                            <tr>
                                                 <td>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" id="team1Goals">
-                                                    </div>
+                                                    ${user.firstName} ${user.lastName} 
                                                 </td>
-                                            </c:forEach>
-                                            <td>
-                                                <button type="submit" class="btn btn-default sendEstimationButton" value="${matchSet.id}">Отправить</button>
-                                            </td>
-                                        </tr>
-                                    </tfoot>
+                                                <c:forEach var="match" items="${matchSet.matches}">
+                                                    <td>
+                                                        <div class="form-group">
+                                                            <input type="text" class="form-control" id="team1Goals">
+                                                        </div>
+                                                    </td>
+                                                </c:forEach>
+                                                <td>
+                                                    <button type="submit" class="btn btn-default sendEstimationButton" value="${matchSet.id}">Отправить</button>
+                                                </td>
+                                            </tr>
+                                        </tfoot>
+                                    </c:if>
                                 </table>
-                            </div>
- <!--                               <div class="panel-footer">
-                                    <div class="row">
-                                        <div class="col-md-2 col-md-offset-10"><button type="submit" class="btn btn-default">Отправить</button></div>
+                                <div class="panel-footer hidden">
+                                    <div class="alert alert-success hidden">
+                                        Ваш прогноз успешно добавлен.
+                                    </div> 
+                                    <div class="alert alert-danger hidden">
+                                        Ошибка. Возможно данные введены не корректно. 
                                     </div>
-                                </div> -->
+                                </div>
+                            </div>
                         </div>
                 </div>
             </c:forEach>
@@ -148,6 +166,33 @@
                     }
                 };
 
+                var dataValidator = {
+
+                    checkEstimation: function(estimations) {
+
+                        for(var i = 0; i < estimations.length; i++) {
+                            console.log(estimations[i]);
+                            if (estimations[i] == null) {
+                                return false;
+                            }
+
+                            var snipets = estimations[i].split(':');
+                            if (snipets.length != 2) {
+                                return false;
+                            }
+                            if (! ($.isNumeric(snipets[0]) && $.isNumeric(snipets[1])) ) {
+                                return false;
+                            }
+
+                            if ( ((snipets[0] % 1) != 0) && ((snipets[1] % 1) != 0) ) {
+                                return false;
+                            }
+
+                        }
+                        return true;
+                    }
+                }
+
                 var dataUpdater = {
 
                     updateEstimation: function (estimations, matchSetId) {
@@ -158,6 +203,17 @@
                         httpRequest.open('GET', addEstimationControllerUrl + params, true); 
                         httpRequest.send(null);
                         selectedChecker = null;
+                    },
+
+                    insertEstimation: function (estimations, matchSetId) {
+
+                        var estimationRow = '<tr><td>' + '${user.firstName} ${user.lastName}' + '</td>';
+                        for (var i = 0; i < estimations.length; i++) {
+                            estimationRow += '<td>' + estimations[i] + '</td>';
+                        }
+                        estimationRow += '</tr>';
+                        $('#evalTable_' + matchSetId).append(estimationRow);
+
                     }
 
                 };
@@ -169,8 +225,17 @@
                         estimations.push($( this )[0].value);
                     })
 
-                    dataUpdater.updateEstimation(estimations, matchSetId);
-                   
+                    if (dataValidator.checkEstimation(estimations)) {
+                        $('#match_' + matchSetId).find('.panel-footer').removeClass('hidden');
+                        $('#match_' + matchSetId).find('.alert-success').removeClass('hidden');
+                        $('#match_' + matchSetId).find('.alert-danger').addClass('hidden');
+                        $('#evalTable_' + matchSetId).find('tfoot').addClass('hidden');
+                        dataUpdater.updateEstimation(estimations, matchSetId);
+                        dataUpdater.insertEstimation(estimations, matchSetId);
+                    } else {
+                        $('#match_' + matchSetId).find('.panel-footer').removeClass('hidden');
+                        $('#match_' + matchSetId).find('.alert-danger').removeClass('hidden');
+                    }
                 });
 
             });

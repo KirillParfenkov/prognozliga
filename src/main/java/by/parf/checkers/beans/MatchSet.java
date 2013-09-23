@@ -1,8 +1,6 @@
 package by.parf.checkers.beans;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -17,23 +15,27 @@ public class MatchSet {
     private String title;
     private List<Match> matches;
     private List<Evaluation> evaluations;
+    private Map<User, Map<Match, Evaluation>> userList;
 
     public MatchSet(long id, Date date) {
         this.id = id;
         this.date = date;
         matches = new ArrayList<Match>();
         evaluations = new ArrayList<Evaluation>();
+        userList = new HashMap<User, Map<Match, Evaluation>>();
     }
 
     public MatchSet() {
         matches = new ArrayList<Match>();
         evaluations = new ArrayList<Evaluation>();
+        userList = new HashMap<User, Map<Match, Evaluation>>();
     }
 
     public MatchSet(Date date) {
         this.date = date;
         matches = new ArrayList<Match>();
         evaluations = new ArrayList<Evaluation>();
+        userList = new HashMap<User, Map<Match, Evaluation>>();
     }
 
     public MatchSet(List<Match> matches) {
@@ -86,5 +88,13 @@ public class MatchSet {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public Map<User, Map<Match, Evaluation>> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(Map<User, Map<Match, Evaluation>> userList) {
+        this.userList = userList;
     }
 }

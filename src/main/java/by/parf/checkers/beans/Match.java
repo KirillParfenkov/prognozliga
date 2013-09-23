@@ -9,7 +9,7 @@ import java.util.Date;
  * Date: 28.8.13
  * Time: 21.04
  */
-public class Match {
+public class Match implements Comparable<Match>{
 
     private long id;
     private String name;
@@ -87,5 +87,31 @@ public class Match {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        if (obj == this)
+            return true;
+        if(!(obj instanceof User))
+            return false;
+        Match match = (Match) obj;
+
+        return this.compareTo(match) == 0;
+    }
+
+    @Override
+    public int compareTo(Match match) {
+
+        if (this.getId() < match.getId()) return -1;
+        if (this.getId() > match.getId()) return 1;
+        return 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int ) (id % 999999);
     }
 }
