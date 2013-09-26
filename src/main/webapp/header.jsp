@@ -6,9 +6,10 @@
 <c:url value="<%= Constant.URL_LOGIN_CONTROLLER %>" var="urlLoginController"/>
 <c:url value="<%= Constant.URL_MAIN_CONTROLLER %>" var="urlMainController"/>
 
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+<a class="navbar-brand" href="#">PrognozLiga</a>
 <c:if test="${empty user}">
-
-    <div class="row">
+    <div class="row pull-right" style="margin-right: 0px">
         <div class="col-md-12">
           <form class="form-inline" role="form" action="<%= Constant.URL_LOGIN_CONTROLLER %>">
             <div class="form-group">
@@ -19,33 +20,39 @@
               <label class="sr-only" for="exampleInputPassword2">Password</label>
               <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Password" name="<%= Constant.KEY_INPUT_PASSWORD%>">
             </div>
-            <button type="submit" class="btn btn-default">Войти</button>
+            <button type="submit" class="btn btn-default navbar-btn">Войти</button>
           </form>
         </div>
       </div>
-
 </c:if>
 
 <c:if test="${not empty user}">
-  <nav class="navbar navbar-default" role="navigation">
-    <div class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav navbar-nav">
-        <p class="navbar-text"><c:out value="Hi, ${user.firstName}  ${user.lastName}"></c:out></p>
-        <li><a href="<%= Constant.URL_LOGOUT_CONTROLLER %>" >Выйти</a></li>
-       
-        <c:if test="${user.profile.id == 0}">
-          <li><a href="<%= Constant.URL_MANAGEMENT_CONTROLLER %>">Управление</a></li>
-        </c:if>
-        <li><a href="<%= Constant.URL_MAIN_CONTROLLER %>">Главная</a></li>
-      </ul>
+  <ul class="nav navbar-nav">
+    <c:if test="${user.profile.id == 0}">
+      <li><a href="<%= Constant.URL_MANAGEMENT_CONTROLLER %>">Управление</a></li>
+    </c:if>
+    <li><a href="<%= Constant.URL_MAIN_CONTROLLER %>">Главная</a></li>
+    <li>
+      <a href='#'>
+        Рейтинг <span class="badge"> 2 </span>
+      </a>
+    </li>
+  </ul>
+  <ul class="nav navbar-nav navbar-right">
+    <li><p class="navbar-text"><c:out value="Hi, ${user.firstName}  ${user.lastName}"></p></c:out></li>
+    <li><a href="<%= Constant.URL_LOGOUT_CONTROLLER %>" >Выйти</a></li>
+  </ul>
+</c:if>
+</nav>
+
+
+<c:if test="${not empty errorMessageKey}">
+  <nav class="navbar navbar-default navbar-fixed-top" role="navigation" style="top: 50px">
+    <div class=error>
+      <div id="topErrorMessage" class="alert alert-danger"><c:out value="${errorMessageKey}"></c:out></div>
     </div>
   </nav>
 </c:if>
 
-<c:if test="${not empty errorMessageKey}">
-  <div class=error>
-    <div id="topErrorMessage" class="alert alert-danger"><c:out value="${errorMessageKey}"></c:out></div>
-  </div>
-</c:if>
 
 

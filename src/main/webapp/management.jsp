@@ -38,8 +38,8 @@
 
     		#mainList {
     			/*margin: 0 auto;
-    			width: 540px;
-    			margin-top: 50px;*/
+    			width: 540px;*/
+    			margin-top: 80px;
     		}
 
     		#evalTable {
@@ -74,13 +74,8 @@
     	</style>
       </head>
     <body>
-        <style>
-
-        </style>
-        <div id="header">
-            <jsp:include page="<%= Constant.URL_HEADER_PAGE%>" />
-        </div>
-
+        <jsp:include page="<%= Constant.URL_HEADER_PAGE%>" />
+        
         <div id="mainList" class="col-md-12">
             <div class="row">
                 <div id="navPanel" class="col-md-2">
@@ -311,6 +306,7 @@
 
         $(document).ready(function() {
 
+            var rootpath = 'http://' + location.hostname + ':' + location.port;
 
             $('#datetimepicker4').datetimepicker({
                 pickTime: false
@@ -367,7 +363,7 @@
 
                 updateTeams: function () {
 
-                    var showTeamContollerUrl = "http://progmozliga.herokuapp.com/showTeamListController";
+                    var showTeamContollerUrl = rootpath + "/showTeamListController";
 
                     var params = "?inputTeamNameKey=" + "test";
                     httpRequest.open('GET', showTeamContollerUrl + params, true); 
@@ -377,7 +373,7 @@
 
                 updateMatches: function () {
 
-                    var showMatchContollerUrl = "http://progmozliga.herokuapp.com/showMatchListController";
+                    var showMatchContollerUrl = rootpath + "/showMatchListController";
 
                     var params = "?inputTeamNameKey=" + "test";
                     httpRequest.open('GET', showMatchContollerUrl + params, true); 
@@ -415,7 +411,7 @@
 
             $("#inputMatchSendButton").on('click', function() {
 
-                var addMatchContollerUrl = "http://progmozliga.herokuapp.com/addMatchController";
+                var addMatchContollerUrl = rootpath + "/addMatchController";
 
                 var params = "?inputMatchNameKey=" + $("#inputMatchName")[0].value 
                             + "&inputMatchDateKey=" + $("#inputMatchDate").find('input')[0].value
@@ -475,7 +471,7 @@
 
             $("#inputTeamSendButton").on('click', function() {
 
-                var addTeamContollerUrl = "http://progmozliga.herokuapp.com/addTeamController";
+                var addTeamContollerUrl = rootpath + "/addTeamController";
 
                 var params = "?inputTeamNameKey=" + $("#inputTeamName")[0].value;
                         httpRequest.open('GET', addTeamContollerUrl + params, true); 

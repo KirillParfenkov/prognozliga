@@ -65,9 +65,8 @@
         <style>
 
         </style>
-        <div id="header">
-            <jsp:include page="<%= Constant.URL_HEADER_PAGE%>" />
-        </div>
+       
+        <jsp:include page="<%= Constant.URL_HEADER_PAGE%>" />
 
         <div id="mainList">
             <c:forEach var="matchSet" items="${matchSetList}">
@@ -138,6 +137,8 @@
 
         <script type="text/javascript">
 
+            var rootpath = 'http://' + location.hostname + ':' + location.port;
+
             $(document).ready(function() {
 
                 var httpRequest;
@@ -197,7 +198,7 @@
 
                     updateEstimation: function (estimations, matchSetId) {
 
-                        var addEstimationControllerUrl = "http://progmozliga.herokuapp.com/addEstimationController";
+                        var addEstimationControllerUrl = rootpath + "/addEstimationController";
 
                         var params = "?inputEstimations=" + estimations.join() + "&matchSet=" + matchSetId;
                         httpRequest.open('GET', addEstimationControllerUrl + params, true); 
