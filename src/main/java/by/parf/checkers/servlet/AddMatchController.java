@@ -69,6 +69,7 @@ public class AddMatchController extends AbstractController{
         response.setContentType("text/html");
         response.getWriter().write("true");
         matchDao.close();
+        teamDao.close();
 
     }
 }

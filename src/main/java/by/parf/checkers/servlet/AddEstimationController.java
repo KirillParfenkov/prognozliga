@@ -63,5 +63,6 @@ public class AddEstimationController extends AbstractController {
         response.setContentType("text/html");
         response.getWriter().write("true");
         matchDao.close();
+        evaluationDao.close();
     }
 }
