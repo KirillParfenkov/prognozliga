@@ -66,8 +66,8 @@ public class AddMatchController extends AbstractController{
         matchDao.addMatch(match);
         matchDao.addMatchToMatchSet(match, matchSet);
 
-        response.setContentType("text/html");
-        response.getWriter().write("true");
+        response.setContentType("application/json");
+        response.getWriter().write("{type: 'resultAddingMatch', result: true}");
         matchDao.close();
         teamDao.close();
 

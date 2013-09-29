@@ -5,7 +5,7 @@
 
 <html>
 	  <head>
-        <title>Bootstrap 101 Template</title>
+        <title>Prognozliga</title>
         <meta chatset='utf-8'>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
@@ -81,7 +81,7 @@
                                         <tr>
                                             <th>Участник</th>
                                             <c:forEach var="match" items="${matchSet.matches}">
-                                                <th>${match.teamFirst.name} - ${match.teamSecond.name}</th>
+                                                <th class="col-md-1">${match.teamFirst.name} - ${match.teamSecond.name}</th>
                                             </c:forEach>
                                         </tr>
                                     </thead>

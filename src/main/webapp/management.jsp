@@ -5,7 +5,7 @@
 
 <html>
 	  <head>
-        <title>Bootstrap 101 Template</title>
+        <title>Prognozliga</title>
         <meta chatset='utf-8'>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <!-- Bootstrap -->
@@ -327,8 +327,11 @@
                      if (httpRequest.status === 200) {
 
                         var result = JSON.parse(httpRequest.responseText);
-                        var compTeamRes = result.type.localeCompare("teamList");
-
+                        console.log('result.type: ' + result.type);
+                        if (result.type.localeCompare){
+                            var compTeamRes = result.type.localeCompare("teamList");
+                        }
+                        
                         // Teams companents update.
                         if (compTeamRes === 0) {
                             // Update objects associated with a list of team.
@@ -412,7 +415,7 @@
             $("#inputMatchSendButton").on('click', function() {
 
                 var addMatchContollerUrl = rootpath + "/addMatchController";
-
+                console.log("send match");
                 var params = "?inputMatchNameKey=" + $("#inputMatchName")[0].value 
                             + "&inputMatchDateKey=" + $("#inputMatchDate").find('input')[0].value
                             + "&inputMatchTimeKey=" + $("#inputMatchTime").find('input')[0].value
