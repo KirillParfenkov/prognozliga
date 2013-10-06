@@ -238,7 +238,6 @@
                         $('#match_' + matchSetId).find('.alert-danger').removeClass('hidden');
                     }
                 });
-
             });
 
         </script>

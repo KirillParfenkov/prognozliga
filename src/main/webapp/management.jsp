@@ -83,7 +83,8 @@
                         <li class="dropdown active">
                             <a id="navItem1" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown">Матчи <span class="caret"></span></a>
                             <ul class="dropdown-menu" role="menu" aria-labelledby="navItem1">
-                                <li><a id="showMatchListButton" href="#matchList">Показать список</a></li>
+                                <li><a id="showMatchListButton" href="#matchList">Список матчей</a></li>
+                                <li><a id="showMatchSetListButton" href="#matchSetList">Группы матчей</a></li>
                                 <li><a id="inputMatchButton" href="#matchList">Добавить матч</a></li>
                             </ul>
                         </li>
@@ -119,6 +120,20 @@
                                         <th>Время</th>
                                         <th>Дата</th>
                                         <th>Результат</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane" id="matchSetList">
+                             <table class="table table-hover" id="matchSetTable">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Заголовок</th>
+                                        <th>Дата</th>
+                                        <th>Закрыт</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -330,6 +345,8 @@
                         console.log('result.type: ' + result.type);
                         if (result.type.localeCompare){
                             var compTeamRes = result.type.localeCompare("teamList");
+                            var compMatchSetRes = result.type.localeCompare("matchSetList");
+                            var compMatchRes = result.type.localeCompare("matchList");
                         }
                         
                         // Teams companents update.
@@ -347,10 +364,12 @@
                             }
                         }
 
-                        var compMatchRes = result.type.localeCompare("matchList");
-
                         if (compMatchRes === 0) {
                             redrawMatchTable($('#matchTable'), result.content);
+                        }
+
+                        if (compMatchSetRes === 0) {
+                            redrawMatchSetTable($('#matchSetTable'), result.content);
                         }
 
                        // makeProgress(move);
@@ -372,6 +391,8 @@
                     httpRequest.open('GET', showTeamContollerUrl + params, true); 
                     httpRequest.send(null);
                     selectedChecker = null;
+
+                    event.preventDefault()
                 },
 
                 updateMatches: function () {
@@ -382,6 +403,22 @@
                     httpRequest.open('GET', showMatchContollerUrl + params, true); 
                     httpRequest.send(null);
                     selectedChecker = null;
+
+                    event.preventDefault();
+                },
+
+                updateMatchSets: function () {
+                    var showMatchSetListControllerUrl = rootpath + "/showMatchSetListController";
+
+                    var params = "";
+                    httpRequest.open('GET', showMatchSetListControllerUrl + params, true);
+                    httpRequest.send(null);
+
+                    event.preventDefault();
+                },
+
+                updateMatchSet: function () {
+                    var updateMatchSetControllerUrl = rootpath + "/updateMatchSetController";
                 }
 
             };
@@ -412,6 +449,22 @@
                 }
             }
 
+            function redrawMatchSetTable( table, rowList ) {
+
+                table.find('tbody').find('tr').remove();
+                for (var i = 0; i < rowList.length; i++ ) {
+                    table.find('tbody').append('<tr><td>' + rowList[i].id + '</td>' + 
+                                                   '<td>' + rowList[i].title + '</td>' +
+                                                   '<td>' + rowList[i].date + '</td>' +
+                                                   '<td>' + rowList[i].closed + '</td>' +
+                                                   '<td> <button type="submit" class="btn btn-default closeMatchSetButton" value="' + rowList[i].id + '">Закрыть</button></td>' + '</tr>');
+                }
+
+                $('.closeMatchSetButton').on('click', function () {
+                    
+                });
+            }
+
             $("#inputMatchSendButton").on('click', function() {
 
                 var addMatchContollerUrl = rootpath + "/addMatchController";
@@ -427,6 +480,10 @@
                 selectedChecker = null;
             }); 
 
+            $('#showMatchSetListButton').on('click', function () {
+                dataUpdater.updateMatchSets();
+                $(this).tab('show');
+            });
 
             $('#showMatchListButton').on('click', function () {
                 dataUpdater.updateMatches();
@@ -456,7 +513,6 @@
                 show: false,
                 backdrop: true
             });
-
 
             $('#inputTeamButton').on('click' , function() {
                 var w = 400; // popup width

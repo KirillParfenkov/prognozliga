@@ -221,9 +221,11 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
         String COL_ID = "id";
         String COL_DATE = "date";
         String COL_TITLE = "title";
+        String COL_CLOSED = "closed";
 
         MatchSet matchSet = new MatchSet(resultSet.getLong(COL_ID), resultSet.getDate(COL_DATE));
         matchSet.setTitle(resultSet.getString(COL_TITLE));
+        matchSet.setClosed(resultSet.getBoolean(COL_CLOSED));
 
         List<Match> matches = getMatchesByMatchSetId(matchSet.getId());
         matchSet.setMatches(matches);

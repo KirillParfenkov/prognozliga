@@ -16,6 +16,7 @@ public class MatchSet {
     private List<Match> matches;
     private List<Evaluation> evaluations;
     private Map<User, Map<Match, Evaluation>> userList;
+    private Boolean closed;
 
     public MatchSet(long id, Date date) {
         this.id = id;
@@ -23,12 +24,14 @@ public class MatchSet {
         matches = new ArrayList<Match>();
         evaluations = new ArrayList<Evaluation>();
         userList = new HashMap<User, Map<Match, Evaluation>>();
+        closed = false;
     }
 
     public MatchSet() {
         matches = new ArrayList<Match>();
         evaluations = new ArrayList<Evaluation>();
         userList = new HashMap<User, Map<Match, Evaluation>>();
+        closed = false;
     }
 
     public MatchSet(Date date) {
@@ -36,6 +39,7 @@ public class MatchSet {
         matches = new ArrayList<Match>();
         evaluations = new ArrayList<Evaluation>();
         userList = new HashMap<User, Map<Match, Evaluation>>();
+        closed = false;
     }
 
     public MatchSet(List<Match> matches) {
@@ -96,5 +100,13 @@ public class MatchSet {
 
     public void setUserList(Map<User, Map<Match, Evaluation>> userList) {
         this.userList = userList;
+    }
+
+    public Boolean getClosed() {
+        return closed;
+    }
+
+    public void setClosed(Boolean closed) {
+        this.closed = closed;
     }
 }
