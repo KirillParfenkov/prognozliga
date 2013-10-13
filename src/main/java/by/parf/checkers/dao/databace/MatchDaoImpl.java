@@ -39,6 +39,7 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
     private static String INSERT_MATCH_TO_MATCH_SET = "insert.match.to.match.set";
     private static String SELECT_MATCHES_BY_MATCH_SET_Id = "select.matches.by.matchSet.id";
     private static String SELECT_MATCH_SET_BY_DATE = "select.matchSet.by.date";
+    private static String UPDATE_MATCH_SET_BY_ID = "update.matchSet.by.id";
 
     private Connection connection;
     private PreparedStatement psSelectMatches;
@@ -54,6 +55,7 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
     private PreparedStatement psInsertMatchToMatchSet;
     private PreparedStatement psSelectMatchesByMatchSetId;
     private PreparedStatement psSelectMatchSetByDate;
+    private PreparedStatement psUpdateMatchSet;
 
     private TeamDao teamDao;
     //private EvaluationDao evaluationDao;
@@ -88,6 +90,7 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
         psInsertMatchToMatchSet = connection.prepareStatement(props.getProperty(INSERT_MATCH_TO_MATCH_SET));
         psSelectMatchesByMatchSetId = connection.prepareStatement(props.getProperty(SELECT_MATCHES_BY_MATCH_SET_Id));
         psSelectMatchSetByDate = connection.prepareStatement(props.getProperty(SELECT_MATCH_SET_BY_DATE));
+        psUpdateMatchSet = connection.prepareStatement(props.getProperty(UPDATE_MATCH_SET_BY_ID));
 
         teamDao = TeamFactory.getClassFromFactory();
         //evaluationDao = EvaluationFactory.getClassFromFactory();
@@ -435,6 +438,40 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
     }
 
     @Override
+    public void updateMatchSet(MatchSet matchSet) {
+        // After you need to finish removing and adding new matches
+        int numDate = 1;
+        int numTitle = 2;
+        int numIsClosed = 3;
+        int numId = 4;
+
+        int numMatchSetId = 1;
+        int numMatchId = 2;
+
+        List<Match> matchList = null;
+
+        try {
+
+            psUpdateMatchSet.setDate(numDate, new java.sql.Date(matchSet.getDate().getTime()));
+            psUpdateMatchSet.setString(numTitle, matchSet.getTitle());
+            psUpdateMatchSet.setLong(numId, matchSet.getId());
+            psUpdateMatchSet.setBoolean(numIsClosed, matchSet.getClosed());
+            psUpdateMatchSet.executeUpdate();
+
+            /*
+            psInsertMatchToMatchSet.setLong(numMatchSetId, matchSet.getId());
+
+            for (Match match: matchSet.getMatches()) {
+                psInsertMatchToMatchSet.setLong(numMatchId, match.getId());
+                psInsertMatchToMatchSet.executeUpdate();
+            }    */
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void close() {
 
         teamDao.close();
@@ -453,6 +490,7 @@ public class MatchDaoImpl extends AbstractDatabaseDAO implements MatchDao {
         closeConnection(psInsertMatchToMatchSet);
         closeConnection(psSelectMatchesByMatchSetId);
         closeConnection(psSelectMatchSetByDate);
+        closeConnection(psUpdateMatchSet);
         closeConnection(connection);
     }
 }

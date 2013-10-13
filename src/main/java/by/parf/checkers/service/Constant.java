@@ -15,8 +15,9 @@ public final class Constant {
     public static final String URL_MANAGEMENT_CONTROLLER = "/managementController";
     public static final String URL_MANAGEMENT_PAGE = "/management.jsp";
     public static final String URL_MAIN_PAGE = "/main.jsp";
+    public static final String URL_CLOSE_MATCH_SET_CONTROLLER = "/closeMatchSetController";
 
-
+    public static final String KEY_MATCH_SET_ID = "matchSetId";
     public static final String KEY_EVALUATION_LIST = "evaluationList";
     public static final String KEY_MATCH_LIST = "matchList";
     public static final String KEY_MATCH_SET_LIST = "matchSetList";

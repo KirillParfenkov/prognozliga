@@ -88,19 +88,24 @@
                                     <tbody>
                                         <c:forEach var="userEvaluation" items="${matchSet.userList}">
                                             <tr>
-                                                <td>${userEvaluation.key.firstName} ${userEvaluation.key.lastName}</td>
+                                                <td>${userEvaluation.key.firstName} ${userEvaluation.key.lastName} ${userEvaluation.key.id == user.id}</td>
 
                                                 <c:forEach var="match" items="${matchSet.matches}">
-                                                    <td>${userEvaluation.value[match].teamFirstGoals}:${userEvaluation.value[match].teamSecondGoals}</td>
+                                                    <td>
+                                                        <c:if test="${(matchSet.closed) or (userEvaluation.key.id == user.id)}">
+                                                            ${userEvaluation.value[match].teamFirstGoals}:${userEvaluation.value[match].teamSecondGoals}
+                                                        </c:if>
+                                                        <c:if test="${!matchSet.closed and !(userEvaluation.key.id == user.id)}">*</c:if>
+                                                    </td>
                                                 </c:forEach>
                                             </tr>
                                         </c:forEach> 
                                     </tbody>
-                                    <c:if test="${(matchSet.userList[user] == null) && (user != null)}">
+                                    <c:if test="${(matchSet.userList[user] == null) && (user != null) && (!matchSet.closed)}">
                                         <tfoot>
                                             <tr>
                                                 <td>
-                                                    ${user.firstName} ${user.lastName} 
+                                                    ${user.firstName} ${user.lastName} ${user.id}
                                                 </td>
                                                 <c:forEach var="match" items="${matchSet.matches}">
                                                     <td>

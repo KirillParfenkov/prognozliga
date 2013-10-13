@@ -21,6 +21,7 @@ public interface MatchDao {
     void updateMatch(Match match);
     void addMatch(Match match);
     void addMatchToMatchSet(Match match, MatchSet matchSet);
+    void updateMatchSet(MatchSet matchSet);
     List<Match> getLimitedMatchListFromId(long fromId, long number);
     List<MatchSet> getLimitedMatchSetListFromId(long fromId, long number);
     void addMatchSet(MatchSet matchSet);

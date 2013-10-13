@@ -1,5 +1,7 @@
 package by.parf.checkers.servlet;
 
+import org.json.JSONException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

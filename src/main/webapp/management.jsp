@@ -62,7 +62,6 @@
             }
 
 
-
             .calendar-z-index {
                 z-index: 10000;
             }
@@ -347,6 +346,7 @@
                             var compTeamRes = result.type.localeCompare("teamList");
                             var compMatchSetRes = result.type.localeCompare("matchSetList");
                             var compMatchRes = result.type.localeCompare("matchList");
+                            var compCloseMatchSet = result.type.localeCompare("closeMatchSet");
                         }
                         
                         // Teams companents update.
@@ -372,11 +372,12 @@
                             redrawMatchSetTable($('#matchSetTable'), result.content);
                         }
 
-                       // makeProgress(move);
-                       console.log(httpRequest.responseText);
+                        if (compCloseMatchSet === 0) {
+                            redrawClosedMatchSet($('#matchSetTable'), result.content);
+                        }
+
 
                     } else {
-                        // alert('There was a problem with the request.');
                     }
                 }
             };
@@ -435,7 +436,17 @@
                 }
             }
 
-             function redrawMatchTable( table, rowList ) {
+            function redrawClosedMatchSet ( table, id ) {
+                table.find('tr').each(function() {
+                    if ($( this ).find('.id').html() == id) {
+                        $( this ).find('.closed').html('true');
+                    }
+                    
+                });
+
+            }
+
+            function redrawMatchTable( table, rowList ) {
 
                 table.find('tbody').find('tr').remove();
                 for (var i = 0; i < rowList.length; i++ ) {
@@ -453,22 +464,27 @@
 
                 table.find('tbody').find('tr').remove();
                 for (var i = 0; i < rowList.length; i++ ) {
-                    table.find('tbody').append('<tr><td>' + rowList[i].id + '</td>' + 
-                                                   '<td>' + rowList[i].title + '</td>' +
-                                                   '<td>' + rowList[i].date + '</td>' +
-                                                   '<td>' + rowList[i].closed + '</td>' +
+                    table.find('tbody').append('<tr><td class="id">' + rowList[i].id + '</td>' + 
+                                                   '<td class="title">' + rowList[i].title + '</td>' +
+                                                   '<td class="date">' + rowList[i].date + '</td>' +
+                                                   '<td class="closed">' + rowList[i].closed + '</td>' +
                                                    '<td> <button type="submit" class="btn btn-default closeMatchSetButton" value="' + rowList[i].id + '">Закрыть</button></td>' + '</tr>');
                 }
 
                 $('.closeMatchSetButton').on('click', function () {
-                    
+                    console.log($(this)[0].value);
+
+                    var closeMatchSetControllerUrl = rootpath + "/closeMatchSetController";
+                    var params = "?matchSetId=" + $(this)[0].value;
+                    httpRequest.open('GET', closeMatchSetControllerUrl + params, true);
+                    httpRequest.send(null);
+
                 });
             }
 
             $("#inputMatchSendButton").on('click', function() {
 
                 var addMatchContollerUrl = rootpath + "/addMatchController";
-                console.log("send match");
                 var params = "?inputMatchNameKey=" + $("#inputMatchName")[0].value 
                             + "&inputMatchDateKey=" + $("#inputMatchDate").find('input')[0].value
                             + "&inputMatchTimeKey=" + $("#inputMatchTime").find('input')[0].value

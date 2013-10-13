@@ -54,9 +54,6 @@ public class MainController extends AbstractController {
                 evaluationList = evaluationDao.getEvaluationListByMatchId(match.getId());
                 for (Evaluation evaluation: evaluationList) {
 
-                    System.out.println( "---boolean-->" + tmpUser.equals(evaluation.getUser()) );
-                    System.out.println( "--id->"  + tmpUser.getId());
-
                     tmpUser = evaluation.getUser();
                     Map<Match, Evaluation> mapEvaluations = matchSet.getUserList().get(tmpUser);
                     if (mapEvaluations == null) {
