@@ -88,7 +88,7 @@
                                     <tbody>
                                         <c:forEach var="userEvaluation" items="${matchSet.userList}">
                                             <tr>
-                                                <td>${userEvaluation.key.firstName} ${userEvaluation.key.lastName} ${userEvaluation.key.id == user.id}</td>
+                                                <td>${userEvaluation.key.firstName} ${userEvaluation.key.lastName}</td>
 
                                                 <c:forEach var="match" items="${matchSet.matches}">
                                                     <td>
@@ -105,7 +105,7 @@
                                         <tfoot>
                                             <tr>
                                                 <td>
-                                                    ${user.firstName} ${user.lastName} ${user.id}
+                                                    ${user.firstName} ${user.lastName}
                                                 </td>
                                                 <c:forEach var="match" items="${matchSet.matches}">
                                                     <td>
